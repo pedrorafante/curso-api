@@ -28,7 +28,8 @@ class UserServiceImplTest {
     public static final String NAME     = "Pedro";
     public static final String EMAIL    = "pedro@rafante.com.br";
     public static final String PASSWORD = "123";
-    public static final String OBJETO_NÃO_ENCONTRADO = "Objeto não encontrado!";
+
+    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado!";
     public static final int INDEX = 0;
     public static final String E_MAIL_JA_CADASTRADO_NO_SISTEMA = "E-mail já cadastrado no sistema!";
     @InjectMocks
@@ -66,13 +67,13 @@ class UserServiceImplTest {
     }
     @Test
     void whenFindByIdThenReturnAndObjectNotFoundException(){
-        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NÃO_ENCONTRADO));
+        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
 
         try{
             service.findById(ID);
         }catch (Exception ex){
             assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals(OBJETO_NÃO_ENCONTRADO, ex.getMessage());
+            assertEquals(OBJETO_NAO_ENCONTRADO, ex.getMessage());
         }
     }
 
@@ -154,11 +155,21 @@ class UserServiceImplTest {
         verify(repository, times(1)).deleteById(anyInt());
     }
 
+    @Test
+    void deleteWithObjectNotFoundException(){
+        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
+
+        try {
+            service.delete(ID);
+        }catch (Exception ex){
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals(OBJETO_NAO_ENCONTRADO, ex.getMessage());
+        }
+    }
+
     private void startUser(){
         user = new User(ID, NAME, EMAIL, PASSWORD);
         userDTO = new UserDTO(ID, NAME, EMAIL, PASSWORD);
         optionalUser = Optional.of(new User(ID, NAME, EMAIL, PASSWORD));
-
-
     }
 }
