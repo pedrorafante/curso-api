@@ -3,7 +3,7 @@ package br.com.pedrorafante.api.services.impl;
 import br.com.pedrorafante.api.domain.User;
 import br.com.pedrorafante.api.domain.dto.UserDTO;
 import br.com.pedrorafante.api.repositories.UserRepository;
-import br.com.pedrorafante.api.services.exceptions.DataIntegratyViolationException;
+import br.com.pedrorafante.api.services.exceptions.DataIntegrityViolationException;
 import br.com.pedrorafante.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -115,7 +115,7 @@ class UserServiceImplTest {
             optionalUser.get().setId(2);
             service.create(userDTO);
         }catch (Exception ex){
-            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(DataIntegrityViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
     }
@@ -142,7 +142,7 @@ class UserServiceImplTest {
             optionalUser.get().setId(2);
             service.update(userDTO);
         }catch (Exception ex){
-            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(DataIntegrityViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
     }
